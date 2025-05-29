@@ -1,0 +1,290 @@
+.not-found-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: #0f0c29;
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 5s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.not-found-content {
+  text-align: center;
+  z-index: 1;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.glitch-container {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.glitch {
+  font-size: 8rem;
+  font-weight: 900;
+  position: relative;
+  margin: 0;
+  line-height: 1;
+  color: #fff;
+}
+
+.glitch:before, .glitch:after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch:before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00c1;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch:after {
+  left: -2px;
+  text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(31px, 9999px, 94px, 0); }
+  20% { clip: rect(112px, 9999px, 76px, 0); }
+  40% { clip: rect(75px, 9999px, 107px, 0); }
+  60% { clip: rect(42px, 9999px, 130px, 0); }
+  80% { clip: rect(88px, 9999px, 99px, 0); }
+  100% { clip: rect(62px, 9999px, 85px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(65px, 9999px, 119px, 0); }
+  20% { clip: rect(25px, 9999px, 145px, 0); }
+  40% { clip: rect(110px, 9999px, 73px, 0); }
+  60% { clip: rect(38px, 9999px, 152px, 0); }
+  80% { clip: rect(95px, 9999px, 53px, 0); }
+  100% { clip: rect(15px, 9999px, 138px, 0); }
+}
+
+.subtitle {
+  font-size: 2rem;
+  margin-top: -1rem;
+  color: #a5a5ff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  color: #d1d1ff;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.home-button {
+  position: relative;
+  background: transparent;
+  color: white;
+  border: 2px solid #4f4fff;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 50px;
+  overflow: hidden;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.home-button:hover {
+  background: rgba(79, 79, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(79, 79, 255, 0.3);
+}
+
+.home-button span {
+  margin-right: 15px;
+}
+
+.rocket {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.rocket-body {
+  width: 20px;
+  height: 40px;
+  background: white;
+  border-radius: 50% 50% 0 0;
+  position: relative;
+}
+
+.window {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #4f4fff;
+  border-radius: 50%;
+  top: 10px;
+  left: 6px;
+}
+
+.fire {
+  position: absolute;
+  width: 15px;
+  height: 30px;
+  background: linear-gradient(to top, #ff5e00, #ffbb00);
+  border-radius: 0 0 50% 50%;
+  bottom: -25px;
+  left: 2.5px;
+  animation: fire-anim 0.5s infinite alternate;
+}
+
+@keyframes fire-anim {
+  from { height: 30px; }
+  to { height: 35px; }
+}
+
+/* Animation de l'astronaute */
+.astronaut {
+  position: relative;
+  width: 120px;
+  height: 180px;
+  margin: 0 auto 40px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.helmet {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  top: 0;
+  left: 20px;
+  z-index: 2;
+}
+
+.face {
+  position: absolute;
+  width: 50px;
+  height: 40px;
+  background: #f5d6ba;
+  border-radius: 50%;
+  top: 20px;
+  left: 35px;
+  z-index: 3;
+}
+
+.eyes {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 10px 0;
+}
+
+.left-eye, .right-eye {
+  width: 8px;
+  height: 8px;
+  background: #333;
+  border-radius: 50%;
+}
+
+.mouth {
+  width: 20px;
+  height: 5px;
+  background: #333;
+  border-radius: 0 0 10px 10px;
+  margin: 5px auto 0;
+}
+
+.body {
+  position: absolute;
+  width: 70px;
+  height: 90px;
+  background: white;
+  border-radius: 30px;
+  top: 70px;
+  left: 25px;
+  z-index: 1;
+}
+
+.left-arm, .right-arm {
+  position: absolute;
+  width: 20px;
+  height: 60px;
+  background: white;
+  top: 80px;
+}
+
+.left-arm {
+  left: 5px;
+  transform: rotate(30deg);
+  border-radius: 10px 0 0 10px;
+}
+
+.right-arm {
+  right: 5px;
+  transform: rotate(-30deg);
+  border-radius: 0 10px 10px 0;
+}
+
+.left-leg, .right-leg {
+  position: absolute;
+  width: 20px;
+  height: 60px;
+  background: white;
+  top: 150px;
+}
+
+.left-leg {
+  left: 35px;
+  transform: rotate(-10deg);
+  border-radius: 0 0 10px 10px;
+}
+
+.right-leg {
+  right: 35px;
+  transform: rotate(10deg);
+  border-radius: 0 0 10px 10px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}

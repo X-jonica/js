@@ -1,0 +1,346 @@
+/* Layout */
+.inscription-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.welcome-section {
+  width: 40%;
+  height: 100vh; /* Prend toute la hauteur de l'écran */
+  background: url('../assets/img/inscription.jpg') no-repeat center center;
+  background-size: cover;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  position: sticky; /* Rend la section sticky */
+  top: 0; /* Collée en haut */
+  left: 0;
+  overflow-y: auto; /* Permet le scroll si le contenu dépasse */
+  color: white;
+  z-index: 10; /* S'assure qu'elle reste au-dessus */
+}
+
+.welcome-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.9) 0%, rgba(26, 37, 47, 0.8) 100%);
+  z-index: 0;
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+
+.form-scrollable {
+  width: 60%;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Welcome Section Styling */
+.welcome-section h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.welcome-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.highlight {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.welcome-section p {
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+.deadline-box {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(212, 175, 55, 0.2);
+  padding: 0.7rem 1.2rem;
+  border-radius: 50px;
+  margin-top: 1rem;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.deadline-box i {
+  margin-right: 0.7rem;
+  color: #d4af37;
+}
+
+/* Form Styling */
+.form-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-title i {
+  margin-right: 0.8rem;
+  color: #3498db;
+}
+
+.form-subtitle {
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Form Elements */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-group.floating label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: #95a5a6;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  background: white;
+  padding: 0 0.3rem;
+  border-radius: 4px;
+}
+
+.form-group.floating input:focus + label,
+.form-group.floating input:not(:placeholder-shown) + label,
+.form-group.floating select:focus + label,
+.form-group.floating select:valid + label {
+  top: -0.6rem;
+  left: 0.8rem;
+  font-size: 0.8rem;
+  color: #3498db;
+  background: white;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #dfe6e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background-color: #f8f9fa;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+  background-color: white;
+}
+
+.form-group select {
+  appearance: none;
+  background-image: url("../assets/img/inscription.jpg");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+.invalid-feedback {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  display: none;
+}
+
+input:invalid:not(:placeholder-shown),
+select:invalid:not(:placeholder-shown) {
+  border-color: #e74c3c;
+}
+
+input:invalid:not(:placeholder-shown) + label + .invalid-feedback,
+select:invalid:not(:placeholder-shown) + label + .invalid-feedback {
+  display: block;
+}
+
+/* Buttons */
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #3498db, #2ecc71);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.submit-btn i {
+  margin-right: 0.7rem;
+  font-size: 1.2rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+}
+
+/* Alerts */
+.alert {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.alert-success {
+  background-color: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: #27ae60;
+}
+
+.alert-danger {
+  background-color: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+}
+
+.alert i {
+  margin-right: 0.7rem;
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+/* Back Link */
+.back-link-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.back-link {
+  color: #7f8c8d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+.back-link i {
+  margin-right: 0.5rem;
+}
+
+
+.back-link i {
+  margin-right: 0.5rem;
+}
+
+.back-link:hover {
+  color: #3498db;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .form-grid {
+     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  .inscription-container {
+     flex-direction: column;
+  }
+  
+  .welcome-section,
+  .form-scrollable {
+     width: 100%;
+  }
+  
+  .welcome-section {
+     padding: 2rem;
+     text-align: center;
+  }
+  
+  .form-container {
+     padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-card {
+     padding: 1.5rem;
+  }
+  
+  .form-title {
+     font-size: 1.7rem;
+  }
+}

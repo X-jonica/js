@@ -1,0 +1,18 @@
+/* HomePage.css */
+.homepage {
+  position: relative;
+  height: 100vh;
+  background: url('../assets/img/bgImage.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
