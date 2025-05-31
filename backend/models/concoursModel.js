@@ -21,7 +21,12 @@ const Concours = {
       return rows;
    },
 
-   
+   // Compte le nombre total de concours
+   count: async () => {
+      const sql = `SELECT COUNT(*) as total FROM concours`;
+      const [rows] = await pool.query(sql);
+      return rows[0].total;
+   },
 };
 
 module.exports = Concours;

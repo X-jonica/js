@@ -3,30 +3,56 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Dashboard.css";
 import Sidebar from "../components/Sidebar";
+import axios from "axios";
 
 const DashboardAdminPage = ({ adminData }) => {
-   const [stats, setStats] = useState({
-      candidatsInscrits: 0,
-      totalCandidats: 0,
-      inscriptions: 0,
-      concours: 0,
-   });
+   const [countConcours, setCountConcours] = useState(0);
+   const [countInscriptions, setCountInscriptions] = useState(0);
+   const [countCandidats, setCountCandidats] = useState(0);
+   const [countCandidatsInscrit, setCountCandidatsInscrit] = useState(0);
+   const [error, setError] = useState(null);
    const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
-      // Simuler le chargement des données
       const fetchData = async () => {
          try {
-            // En réalité, vous feriez des appels API ici
-            const mockData = {
-               candidatsInscrits: 42,
-               totalCandidats: 125,
-               inscriptions: 87,
-               concours: 5,
-            };
-            setStats(mockData);
+            // Requête pour le nombre de concours
+            const responseConcours = await axios.get(
+               "http://localhost:4000/api/concours/count"
+            );
+            const totalConcours = responseConcours.data.data;
+            setCountConcours(totalConcours);
+            console.log(`Nombre de concours disponible : ${totalConcours}`);
+
+            // Requête pour le nombre d'inscriptions
+            const responseInscriptions = await axios.get(
+               "http://localhost:4000/api/inscriptions/count"
+            );
+            const totalInscriptions = responseInscriptions.data.data;
+            setCountInscriptions(totalInscriptions);
+            console.log(`Nombre d'inscriptions : ${totalInscriptions}`);
+
+            // Requete pour le nombre de candidat
+            const responseCandidats = await axios.get(
+               "http://localhost:4000/api/candidats/count"
+            );
+            const totalCandidats = responseCandidats.data.data;
+            setCountCandidats(totalCandidats);
+            console.log(`Nombre de candidat : ${totalCandidats}`);
+
+            // Requette pour get le candidat inscrit avec status valide
+            const responseCandidatInscrit = await axios.get(
+               "http://localhost:4000/api/inscriptions/count/inscrit"
+            );
+            const totalCandidatInscrit =
+               responseCandidatInscrit.data.data.length;
+            setCountCandidatsInscrit(totalCandidatInscrit);
+            console.log(
+               `Nombre de candidat inscrit avec status validé : ${totalCandidatInscrit}`
+            );
          } catch (error) {
-            console.error("Erreur lors du chargement des données", error);
+            console.error(`Erreur de récupération : ${error}`);
+            setError(error);
          } finally {
             setIsLoading(false);
          }
@@ -38,18 +64,18 @@ const DashboardAdminPage = ({ adminData }) => {
    return (
       <div className="dashboard-container">
          <div className="d-flex">
-            {/* Utilisation du composant Sidebar */}
             <Sidebar adminName={adminData?.nom || "Admin"} />
 
-            {/* Content area */}
             <div className="main-content">
                <h2 className="welcome-header">
                   Bienvenue, vous êtes connecté en tant qu'Administrateur{" "}
-                  <i className="bi bi-emoji-smile"></i>,
-                  <strong> {adminData?.nom || "Admin"}</strong>
+                  <i className="bi bi-emoji-smile"></i>,{" "}
+                  <strong>{adminData?.nom || "Admin"}</strong>
                </h2>
 
-               {isLoading ? (
+               {error ? (
+                  <div className="alert alert-danger">{error}</div>
+               ) : isLoading ? (
                   <div className="text-center py-5">
                      <div className="spinner-border text-primary" role="status">
                         <span className="visually-hidden">Chargement...</span>
@@ -66,10 +92,10 @@ const DashboardAdminPage = ({ adminData }) => {
                                  Inscrits
                               </h5>
                               <div className="card-count display-5 fw-bold text-dark mb-3">
-                                 {stats.candidatsInscrits}
+                                 {countCandidatsInscrit}
                               </div>
                               <small className="text-muted">
-                                 sur {stats.totalCandidats} candidats au total
+                                 sur {countCandidats} candidats au total
                               </small>
                               <Link
                                  to="/admin/candidats"
@@ -90,7 +116,7 @@ const DashboardAdminPage = ({ adminData }) => {
                                  Inscriptions
                               </h5>
                               <div className="card-count display-5 fw-bold text-dark mb-3">
-                                 {stats.inscriptions}
+                                 {countInscriptions}
                               </div>
                               <Link
                                  to="/admin/inscriptions"
@@ -110,7 +136,7 @@ const DashboardAdminPage = ({ adminData }) => {
                                  <i className="bi bi-trophy me-2"></i>Concours
                               </h5>
                               <div className="card-count display-5 fw-bold text-dark mb-3">
-                                 {stats.concours}
+                                 {countConcours}
                               </div>
                               <Link
                                  to="/admin/concours"

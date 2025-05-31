@@ -29,7 +29,7 @@ cella va run le projet dans le port 5173 comme ceci :
 http://localhost:5173/
 ```
 
-3- copier l'URL et coller le dans le backend !
+3- copier l'URL et coller le dans le navigateur !
 
 ## Comment on run le backend "NodeJS" ?
 

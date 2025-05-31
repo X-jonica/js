@@ -3,6 +3,8 @@ const router = express.Router();
 const controller = require("../controllers/inscriptionController");
 
 router.get("/", controller.getAll);
+router.get("/count", controller.getCount);
+router.get("/count/inscrit", controller.getInscrit);
 router.get("/details", controller.getAllWithDetails);
 router.get("/search", controller.search);
 router.get("/valides", controller.getCandidatsValides);

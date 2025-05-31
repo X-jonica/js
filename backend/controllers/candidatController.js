@@ -26,14 +26,14 @@ exports.getById = async (req, res) => {
 
 exports.add = async (req, res) => {
    try {
-      const newCandidat = await Candidat.add(req.body);
-      const message = "Donnée candicat ajouter avec succes 👍";
-      res.json(success(message, newCandidat));
+     const id = await Candidat.add(req.body);
+     res.status(201).json({ id }); // important : retourner l'ID
    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Erreur serveur" });
+     console.error(error);
+     res.status(500).json({ message: "Erreur lors de l'enregistrement du candidat." });
    }
-};
+ };
+ 
 
 exports.update = async (req, res) => {
    try {
@@ -62,6 +62,17 @@ exports.search = async (req, res) => {
       const keyword = req.query.keyword || "";
       const results = await Candidat.search(keyword);
       res.json(results);
+   } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Erreur serveur" });
+   }
+};
+
+exports.getCount = async (req, res) => {
+   try {
+      const total = await Candidat.count();
+      const message = "Statistiques candidats récupérées";
+      res.json(success(message, total));
    } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Erreur serveur" });

@@ -14,7 +14,7 @@ const InscriptionPage = () => {
       recu_paiement: "",
       concours_id: "",
    });
-
+   const [candidat_Id, setCandidat_Id] = useState(null);
    const [concours, setConcours] = useState([]);
    const [successMessage, setSuccessMessage] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
@@ -47,6 +47,71 @@ const InscriptionPage = () => {
       }));
    };
 
+   const handleCandidatRegistration = async () => {
+      // 1. Vérification des champs du candidat
+      if (
+         !formData.nom ||
+         !formData.prenom ||
+         !formData.email ||
+         !formData.telephone ||
+         !formData.type_bacc ||
+         !formData.annee_bacc
+      ) {
+         throw new Error("Tous les champs du candidat doivent être remplis.");
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+         throw new Error("L'email n'est pas valide.");
+      }
+
+      if (!formData.recu_paiement) {
+         throw new Error("Veuillez confirmer votre paiement.");
+      }
+
+      const candidatData = {
+         nom: formData.nom,
+         prenom: formData.prenom,
+         email: formData.email,
+         telephone: formData.telephone,
+         type_bacc: formData.type_bacc,
+         annee_bacc: formData.annee_bacc,
+         recu_paiement: formData.recu_paiement,
+      };
+
+      const response = await axios.post(
+         "http://localhost:4000/api/candidats",
+         candidatData
+      );
+
+      const candidatId = response.data?.id;
+      setCandidat_Id(candidatId);
+      if (!candidatId) {
+         throw new Error("Échec de récupération de l'identifiant du candidat.");
+      }
+
+      return candidatId;
+   };
+
+   // inscription
+   const handleInscription = async (candidatId) => {
+      if (!formData.concours_id) {
+         throw new Error("Veuillez sélectionner un concours.");
+      }
+
+      const inscriptionData = {
+         candidat_id: candidatId,
+         concours_id: formData.concours_id,
+         date_inscription: new Date().toISOString().split("T")[0],
+         statut: "en_attente",
+      };
+
+      await axios.post(
+         "http://localhost:4000/api/inscriptions",
+         inscriptionData
+      );
+   };
+
+   // melanger les deux
    const handleSubmit = async (e) => {
       e.preventDefault();
       setErrorMessage("");
@@ -54,51 +119,17 @@ const InscriptionPage = () => {
       setIsLoading(true);
 
       try {
-         // Validation des champs
-         if (
-            !formData.nom ||
-            !formData.prenom ||
-            !formData.email ||
-            !formData.telephone ||
-            !formData.type_bacc ||
-            !formData.annee_bacc ||
-            !formData.concours_id
-         ) {
-            throw new Error("Tous les champs doivent être remplis.");
-         }
+         // Étape 1 : Enregistrement du candidat
+         const candidatId = await handleCandidatRegistration();
 
-         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            throw new Error("L'email n'est pas valide.");
-         }
-
-         if (!formData.recu_paiement) {
-            throw new Error("Veuillez confirmer votre paiement.");
-         }
-
-         // 1. Enregistrer le candidat
-         const candidatData = {
-            nom: formData.nom,
-            prenom: formData.prenom,
-            email: formData.email,
-            telephone: formData.telephone,
-            type_bacc: formData.type_bacc,
-            annee_bacc: formData.annee_bacc,
-            recu_paiement: formData.recu_paiement,
-         };
-
-         const candidatResponse = await axios.post(
-            "http://localhost:4000/api/candidats",
-            candidatData
-         );
-
-         // Afficher toute la réponse pour inspection
-         console.log("Réponse complète du candidat:", candidatResponse);
+         // Étape 2 : Enregistrement de l'inscription
+         await handleInscription(candidatId);
 
          setSuccessMessage(
             "Inscription réussie ! Vous êtes maintenant enregistré comme candidat."
          );
 
-         // Réinitialiser le formulaire
+         // Réinitialisation
          setFormData({
             nom: "",
             prenom: "",
@@ -111,7 +142,6 @@ const InscriptionPage = () => {
          });
       } catch (error) {
          console.error(error);
-         // Axios renvoie souvent une erreur contenant `response.data.message`
          const message =
             error.response?.data?.message ||
             error.message ||
@@ -161,6 +191,7 @@ const InscriptionPage = () => {
                      <p className="form-subtitle">
                         Veuillez remplir tous les champs obligatoires (*)
                      </p>
+                     <p className="form-subtitle">id : {candidat_Id}</p>
                   </div>
 
                   {successMessage && (

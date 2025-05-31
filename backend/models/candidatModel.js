@@ -25,9 +25,11 @@ const Candidat = {
          recu_paiement,
          password_hash,
       } = candidat;
+
       const sql = `
       INSERT INTO candidats (nom, prenom, email, telephone, type_bacc, annee_bacc, recu_paiement, password_hash)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
       const [result] = await pool.query(sql, [
          nom,
          prenom,
@@ -39,7 +41,8 @@ const Candidat = {
          password_hash,
       ]);
 
-      return result.rows;;
+      // ✅ retourne l'ID inséré
+      return result.insertId;
    },
 
    update: async (id, candidat) => {
@@ -100,6 +103,12 @@ const Candidat = {
       const searchTerm = `%${keyword}%`;
       const result = await pool.query(sql, [searchTerm]);
       return result.rows;
+   },
+
+   count: async () => {
+      const sql = `SELECT COUNT(*) AS total FROM candidats`;
+      const [rows] = await pool.query(sql);
+      return rows[0].total;
    },
 };
 

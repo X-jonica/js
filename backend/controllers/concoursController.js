@@ -39,4 +39,13 @@ exports.getAll = async (req, res) => {
    }
 };
 
-
+exports.count = async (req, res) => {
+   try {
+      const total = await Concours.count();
+      const message = "Nombre de concours récupéré avec succès";
+      res.json(success(message, total));
+   } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Erreur serveur" });
+   }
+};

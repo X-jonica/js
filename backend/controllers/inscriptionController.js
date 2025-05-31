@@ -70,3 +70,25 @@ exports.update = async (req, res) => {
       });
    }
 };
+
+exports.getCount = async (req, res) => {
+   try {
+      const total = await Inscription.count();
+      const message = "Nombre d'inscriptions récupéré avec succès";
+      res.json(success(message, total)); // data sera { total: X }
+   } catch (error) {
+      console.error("Erreur dans getCount :", error);
+      res.status(500).json({ message: "Erreur serveur lors du comptage" });
+   }
+};
+
+exports.getInscrit = async (req, res) => {
+   try {
+      const totalInscrit = await Inscription.countInscrit();
+      const message = "Etudiant inscrit recupere avec succees!"
+      res.json(success(message, totalInscrit))
+   } catch (error) {
+      console.error(`Erreur de recuperation des candidats inscrit , ${error}`)
+      res.status(500).json({message: "Erreur du serveur lors de la recuperation des candidats inscrit"})
+   }
+}

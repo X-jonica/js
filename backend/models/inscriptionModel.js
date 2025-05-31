@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const pool = require("../config/db");
 
 const Inscription = {
    getAll: async () => {
@@ -91,6 +92,22 @@ const Inscription = {
          statut,
          id,
       ]);
+   },
+
+   count: async () => {
+      const sql = "SELECT COUNT(*) AS total FROM inscriptions";
+      const [rows] = await pool.query(sql);
+      return rows[0].total; // retourne { total: X }
+   },
+
+   countInscrit: async () => {
+      const sql = `SELECT c.*
+FROM Candidats c
+JOIN Inscriptions i ON c.id = i.candidat_id
+WHERE i.statut = 'validé';
+`;
+      const [rows] = await pool.query(sql);
+      return rows;
    },
 };
 
